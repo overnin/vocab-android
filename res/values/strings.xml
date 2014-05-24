@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">vocab</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_add_word">Add Word Activity</string>
+    <string name="activity_add_word">Add Word Activity</string>
+	<string name="action_add_word">Add Word</string>
+	<string name="swahili_word">Swahili Word</string>
+	<string name="english_word">English Word</string>
+	<string name="add_word">Add Word</string>
+	<string name="skip_word">Skyp</string>
+	<string name="check_translation">Check translation</string>
+	<string name="translate_here">Translate Here</string>
+	<string name="word_to_translate">Word to translate</string>
+	
+</resources>
