@@ -9,20 +9,33 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.support.v4.app.NavUtils;
 
+import com.example.vocab.model.TranslationDataSource;
+
 public class AddWordActivity extends Activity {
-	private WordDictionary wordDictionary;
-	
+	private TranslationDataSource transactionDataSource;	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_word);
 		// setup the datasource
-		wordDictionary = new WordDictionary(this);
+		transactionDataSource = new TranslationDataSource(this);
+		
+		// Supply the list of languages
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, 
+				R.array.languages_array, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		
+		Spinner sourceSpinner = (Spinner) findViewById(R.id.source_language);
+		sourceSpinner.setAdapter(adapter);
+		Spinner destinationSpinner = (Spinner) findViewById(R.id.destination_language);
+		destinationSpinner.setAdapter(adapter);
 		
 		// Show the Up button in the action bar.
 		setupActionBar();
@@ -69,16 +82,23 @@ public class AddWordActivity extends Activity {
 	}
 
 	public void addWord() {
-		EditText englishWordEditText = (EditText) findViewById(R.id.english_word);
-		String englishWord = englishWordEditText.getText().toString();
-		EditText swahiliWordEditText = (EditText) findViewById(R.id.swahili_word);
-		String swahiliWord = swahiliWordEditText.getText().toString();
+		//get source
+		Spinner sourceLanguageSpinner = (Spinner) findViewById(R.id.source_language);
+		String sourceLanguage = sourceLanguageSpinner.getSelectedItem().toString();
+		EditText sourceContentEditText = (EditText) findViewById(R.id.source_content);
+		String sourceContent = sourceContentEditText.getText().toString();
+		//get destination
+		Spinner destinationLanguageSpinner = (Spinner) findViewById(R.id.destination_language);
+		String destinationLanguage = destinationLanguageSpinner.getSelectedItem().toString();
+		EditText destinationContentEditText = (EditText) findViewById(R.id.destination_content);
+		String destinationContent = destinationContentEditText.getText().toString();
 		//To store
-		wordDictionary.open();
-		wordDictionary.createWord(englishWord, swahiliWord);
-		wordDictionary.close();
-		englishWordEditText.setText("");
-		swahiliWordEditText.setText("");
+		transactionDataSource.open();
+		transactionDataSource.createTranslation(sourceLanguage, sourceContent, 
+				destinationLanguage, destinationContent);
+		transactionDataSource.close();
+		sourceContentEditText.setText("");
+		destinationContentEditText.setText("");
 		//To add a flash message
 	}
 	

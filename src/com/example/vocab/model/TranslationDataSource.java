@@ -14,8 +14,12 @@ public class TranslationDataSource {
 	private TranslationDbHelper dbHelper;
 	public static final String[] allColumns = {
 		TranslationColumns._ID,
-		TranslationColumns.COLUMN_ORIGIN, 
-		TranslationColumns.COLUMN_TRANSLATED};
+		TranslationColumns.COLUMN_SOURCE_LANGUAGE,
+		TranslationColumns.COLUMN_SOURCE_CONTENT,
+		TranslationColumns.COLUMN_DESTINATION_LANGUAGE,
+		TranslationColumns.COLUMN_DESTINATION_CONTENT,
+		TranslationColumns.COLUMN_CREATED_AT
+		};
 	
 	public TranslationDataSource(Context context) {
 		this.dbHelper = new TranslationDbHelper(context);
@@ -29,17 +33,19 @@ public class TranslationDataSource {
 		this.dbHelper.close();
 	}
 	
-	public boolean createWord(String origin, String translated) {	
+	public boolean createTranslation(String sourceLanguage, String sourceContent,
+									String destinationLanguage, String destinationContent) {	
 		ContentValues values = new ContentValues();
-		values.put(TranslationColumns.COLUMN_ORIGIN, origin);
-		values.put(TranslationColumns.COLUMN_TRANSLATED, translated);
-		
+		values.put(TranslationColumns.COLUMN_SOURCE_LANGUAGE, sourceLanguage);
+		values.put(TranslationColumns.COLUMN_SOURCE_CONTENT, sourceContent);
+		values.put(TranslationColumns.COLUMN_DESTINATION_LANGUAGE, destinationLanguage);
+		values.put(TranslationColumns.COLUMN_DESTINATION_CONTENT, destinationContent);
 		long newTranslationId = database.insert(
 				TranslationColumns.TABLE_NAME, null, values);
 		return true;
 	}
 	
-	public Translation getWord() {
+	public Translation getTranslation() {
 		Cursor cursor = database.query(TranslationColumns.TABLE_NAME, 
 				allColumns, null, null, null, null,null);
 		cursor.moveToFirst();
@@ -50,15 +56,21 @@ public class TranslationDataSource {
 	
 	private Translation cursorToTranslation(Cursor cursor) {
 		Translation translation = new Translation();
-		translation.setOrigin(cursor.getString(0));
-		translation.setTranslated(cursor.getString(1));
+		translation.setSourceLanguage(cursor.getString(0));
+		translation.setSourceContent(cursor.getString(1));
+		translation.setDestinationLanguage(cursor.getString(2));
+		translation.setDestinationContent(cursor.getString(3));
 		return translation;
 	}
 	
 	public class TranslationColumns implements BaseColumns {
 		public static final String TABLE_NAME = "translations";
-		public static final String COLUMN_ORIGIN = "origin";
-		public static final String COLUMN_TRANSLATED = "translated";	
+		
+		public static final String COLUMN_SOURCE_LANGUAGE = "source_language";
+		public static final String COLUMN_SOURCE_CONTENT = "source_content";
+		public static final String COLUMN_DESTINATION_LANGUAGE = "destination_language";
+		public static final String COLUMN_DESTINATION_CONTENT = "destination_content";
+		public static final String COLUMN_CREATED_AT = "created_at";
 	}
 	
 	public class TranslationDbHelper extends SQLiteOpenHelper {
@@ -67,9 +79,12 @@ public class TranslationDataSource {
 		private static final String SQL_CREATE_TRANSLATION = 
 				"CREATE TABLE IF NOT EXISTS " +
 				TranslationColumns.TABLE_NAME + " (" +
-				TranslationColumns._ID +" INTEGER PRIMARY KEY, " +
-				TranslationColumns.COLUMN_ORIGIN + TEXT_TYPE + ", " +
-				TranslationColumns.COLUMN_TRANSLATED + TEXT_TYPE +
+				TranslationColumns._ID + " INTEGER PRIMARY KEY, " +
+				TranslationColumns.COLUMN_CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
+				TranslationColumns.COLUMN_SOURCE_LANGUAGE + TEXT_TYPE + ", " +
+				TranslationColumns.COLUMN_SOURCE_CONTENT + TEXT_TYPE + ", " +
+				TranslationColumns.COLUMN_DESTINATION_LANGUAGE + TEXT_TYPE + ", " +
+				TranslationColumns.COLUMN_DESTINATION_CONTENT + TEXT_TYPE +
 				");";
 		
 		public static final int DATABASE_VERSION = 1;

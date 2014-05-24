@@ -7,12 +7,19 @@
     <string name="title_activity_add_word">Add Word Activity</string>
     <string name="activity_add_word">Add Word Activity</string>
 	<string name="action_add_word">Add Word</string>
-	<string name="swahili_word">Swahili Word</string>
-	<string name="english_word">English Word</string>
+	<string name="source_language">Source Language</string>
+	<string name="source_content">Type something</string>
+	<string name="destination_language">Destination Language</string>
+	<string name="destination_content">Translate it!</string>
 	<string name="add_word">Add Word</string>
 	<string name="skip_word">Skyp</string>
 	<string name="check_translation">Check translation</string>
 	<string name="translate_here">Translate Here</string>
 	<string name="word_to_translate">Word to translate</string>
+	
+	<string-array name="languages_array">
+	    <item>English</item>
+	    <item>Swahili</item>
+	</string-array>
 	
 </resources>

@@ -28,16 +28,17 @@ public final class WordDictionary {
 	
 	public boolean createWord(String english_word, String swahili_word) {	
 		ContentValues values = new ContentValues();
-		values.put(WordEntry.COLUMN_NAME_ENGLISH, english_word);
-		values.put(WordEntry.COLUMN_NAME_SWAHILI, swahili_word);
+		values.put(DictionaryDbHelper.COLUMN_NAME_ENGLISH, english_word);
+		values.put(DictionaryDbHelper.COLUMN_NAME_SWAHILI, swahili_word);
 		
-		long newWordId = database.insert(WordEntry.TABLE_NAME, null, values);
+		long newWordId = database.insert(DictionaryDbHelper.TABLE_NAME, null, values);
 		return true;
 	}
 	
 	public WordEntry getWord() {
-		Cursor cursor = database.query(WordEntry.TABLE_NAME, 
-				WordEntry.allColumns, null, null, null, null,null);
+		String[] allColumns = {DictionaryDbHelper.COLUMN_NAME_ENGLISH, DictionaryDbHelper.COLUMN_NAME_ENGLISH};
+		Cursor cursor = database.query(DictionaryDbHelper.TABLE_NAME, 
+				allColumns, null, null, null, null,null);
 		cursor.moveToFirst();
 		WordEntry wordEntry = cursorToWordEntry(cursor);
 		cursor.close();
@@ -78,15 +79,15 @@ public final class WordDictionary {
 		public static final String TABLE_NAME = "word_dictionary";
 		public static final String COLUMN_NAME_ENGLISH = "english";
 		public static final String COLUMN_NAME_SWAHILI = "swahili";
-		public static final String[] allColumns = {COLUMN_NAME_ENGLISH, COLUMN_NAME_ENGLISH};
+		//public static final String[] allColumns = {COLUMN_NAME_ENGLISH, COLUMN_NAME_ENGLISH};
 
 		private static final String TEXT_TYPE = " TEXT";
 		private static final String SQL_CREATE_DICTIONARY = 
 				"CREATE TABLE IF NOT EXISTS " +
 				TABLE_NAME + " (" +
 				WordEntry._ID +" INTEGER PRIMARY KEY, " +
-				WordEntry.COLUMN_NAME_ENGLISH + TEXT_TYPE + ", " +
-				WordEntry.COLUMN_NAME_SWAHILI + TEXT_TYPE +
+				COLUMN_NAME_ENGLISH + TEXT_TYPE + ", " +
+				COLUMN_NAME_SWAHILI + TEXT_TYPE +
 				");";
 		
 		public static final int DATABASE_VERSION = 1;
