@@ -18,14 +18,14 @@ import android.support.v4.app.NavUtils;
 import com.example.vocab.model.TranslationDataSource;
 
 public class AddWordActivity extends Activity {
-	private TranslationDataSource transactionDataSource;	
+	private TranslationDataSource translactionDataSource;	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_word);
 		// setup the datasource
-		transactionDataSource = new TranslationDataSource(this);
+		translactionDataSource = new TranslationDataSource(this);
 		
 		// Supply the list of languages
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, 
@@ -93,10 +93,10 @@ public class AddWordActivity extends Activity {
 		EditText destinationContentEditText = (EditText) findViewById(R.id.destination_content);
 		String destinationContent = destinationContentEditText.getText().toString();
 		//To store
-		transactionDataSource.open();
-		transactionDataSource.createTranslation(sourceLanguage, sourceContent, 
+		translactionDataSource.open();
+		translactionDataSource.createTranslation(sourceLanguage, sourceContent, 
 				destinationLanguage, destinationContent);
-		transactionDataSource.close();
+		translactionDataSource.close();
 		sourceContentEditText.setText("");
 		destinationContentEditText.setText("");
 		//To add a flash message

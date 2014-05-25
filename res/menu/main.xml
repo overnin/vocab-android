@@ -1,9 +1,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item android:id="@+id/action_add_word"
-          android:icon="@drawable/ic_action_add_word"
-          android:title="@string/action_add_word"
-          android:showAsAction="ifRoom" />
+   <item 
+        android:id="@+id/action_translation_list"
+        android:icon="@drawable/ic_action_translation_list"
+        android:title="@string/action_translation_list"
+        android:showAsAction="ifRoom" />
+    
+    <item 
+        android:id="@+id/action_tryout"
+        android:icon="@drawable/ic_action_tryout"
+        android:title="@string/action_tryout"
+        android:showAsAction="ifRoom" />
+    
+    
+    <item 
+        android:id="@+id/action_add_word"
+        android:icon="@drawable/ic_action_add_word"
+        android:title="@string/action_add_word"
+        android:showAsAction="ifRoom" />
+    
     
     <item
         android:id="@+id/action_settings"

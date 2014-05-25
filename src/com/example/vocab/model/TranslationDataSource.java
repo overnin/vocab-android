@@ -1,8 +1,12 @@
 package com.example.vocab.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -12,6 +16,8 @@ public class TranslationDataSource {
 
 	private SQLiteDatabase database;
 	private TranslationDbHelper dbHelper;
+
+	public static final String TABLE_NAME = "translations";
 	public static final String[] allColumns = {
 		TranslationColumns._ID,
 		TranslationColumns.COLUMN_SOURCE_LANGUAGE,
@@ -41,17 +47,38 @@ public class TranslationDataSource {
 		values.put(TranslationColumns.COLUMN_DESTINATION_LANGUAGE, destinationLanguage);
 		values.put(TranslationColumns.COLUMN_DESTINATION_CONTENT, destinationContent);
 		long newTranslationId = database.insert(
-				TranslationColumns.TABLE_NAME, null, values);
+				TABLE_NAME, null, values);
 		return true;
 	}
 	
+	public long count() {
+		return DatabaseUtils.longForQuery(database,
+				"SELECT COUNT(*) FROM " + TABLE_NAME, null);	
+	}
+	
 	public Translation getTranslation() {
-		Cursor cursor = database.query(TranslationColumns.TABLE_NAME, 
-				allColumns, null, null, null, null,null);
+		Cursor cursor = database.query(TABLE_NAME, 
+				allColumns, null, null, null, null, null);
 		cursor.moveToFirst();
 		Translation translation = cursorToTranslation(cursor);
 		cursor.close();
 		return translation;
+	}
+	
+	public Cursor getTranslations() {
+		Cursor cursor = database.query(TABLE_NAME, 
+				allColumns, null, null, null, null, null);
+		//int count = cursor.getCount();
+		//List<Translation> translations = new ArrayList<Translation>();
+		
+		cursor.moveToFirst();
+		/*while (!cursor.isAfterLast()) {
+			translations.add(cursorToTranslation(cursor));
+			cursor.moveToNext();
+		}
+		cursor.close();
+		return translations;*/
+		return cursor;
 	}
 	
 	private Translation cursorToTranslation(Cursor cursor) {
@@ -63,22 +90,13 @@ public class TranslationDataSource {
 		return translation;
 	}
 	
-	public class TranslationColumns implements BaseColumns {
-		public static final String TABLE_NAME = "translations";
-		
-		public static final String COLUMN_SOURCE_LANGUAGE = "source_language";
-		public static final String COLUMN_SOURCE_CONTENT = "source_content";
-		public static final String COLUMN_DESTINATION_LANGUAGE = "destination_language";
-		public static final String COLUMN_DESTINATION_CONTENT = "destination_content";
-		public static final String COLUMN_CREATED_AT = "created_at";
-	}
 	
 	public class TranslationDbHelper extends SQLiteOpenHelper {
 	
 		private static final String TEXT_TYPE = " TEXT";
 		private static final String SQL_CREATE_TRANSLATION = 
 				"CREATE TABLE IF NOT EXISTS " +
-				TranslationColumns.TABLE_NAME + " (" +
+			    TABLE_NAME + " (" +
 				TranslationColumns._ID + " INTEGER PRIMARY KEY, " +
 				TranslationColumns.COLUMN_CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
 				TranslationColumns.COLUMN_SOURCE_LANGUAGE + TEXT_TYPE + ", " +
@@ -104,5 +122,10 @@ public class TranslationDataSource {
 			//TODO
 		}
 	}
+
+
+	
+
+	
 	
 }
