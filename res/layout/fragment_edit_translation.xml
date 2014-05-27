@@ -1,0 +1,71 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="6dip"
+    tools:context="com.example.vocab.EditTranslationActivity$PlaceholderFragment" >
+
+    <LinearLayout
+        android:id="@+id/source_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >       
+     <Spinner
+         android:id="@+id/source_language"
+         android:layout_width="0dp"
+         android:layout_weight="1"
+         android:layout_height="wrap_content"
+         android:textAppearance="?android:attr/textAppearanceLarge"
+          />
+    
+     <EditText 
+        android:id="@+id/source_content"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="3"      
+        android:hint="@string/source_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        />
+    
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/destination_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignLeft="@+id/source_box"
+        android:layout_below="@+id/source_box"
+        >
+
+         <Spinner
+            android:id="@+id/destination_language"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+         	android:layout_weight="1"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        
+        
+        <EditText
+            android:id="@+id/destination_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:hint="@string/destination_content"
+            android:textAppearance="?android:attr/textAppearanceLarge" >
+
+        </EditText>
+
+    </LinearLayout>
+    
+    <Button
+        android:id="@+id/save_translation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/destination_box"
+        android:layout_below="@+id/destination_box"
+        android:text="@string/save_translation" />
+    
+</RelativeLayout>

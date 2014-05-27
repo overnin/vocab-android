@@ -68,7 +68,7 @@ public class MainActivity extends Activity {
 	}
 
 	public void openAddWord() {
-    	Intent intent = new Intent(this, AddWordActivity.class);
+    	Intent intent = new Intent(this, AddTranslationActivity.class);
     	startActivity(intent);
     }
     

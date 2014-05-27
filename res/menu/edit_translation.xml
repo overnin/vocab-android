@@ -1,13 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.vocab.TranslationListActivity" >
+    tools:context="com.example.vocab.EditTranslationActivity" >
 
-    <item 
-        android:id="@+id/action_add_word"
-        android:icon="@drawable/ic_action_add_word"
-        android:title="@string/action_add_word"
-        android:showAsAction="ifRoom" />
-    
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

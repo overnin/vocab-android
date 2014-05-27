@@ -18,18 +18,21 @@
     <string name="hinting">Help Me</string>
     <string name="verifying">Verify</string>
     <string name="translation_counter">You have %1$s translations.</string>
-	<string name="translation_item">(%1$s) %2$s: (%3$s) %4$s</string>
-	<string name="action_translation_list">Translations</string>
-	
+    <string name="translation_item">(%1$s) %2$s: (%3$s) %4$s</string>
+    <string name="action_translation_list">Translations</string>
+    <string name="filter">Type here to filter</string>
+    <string name="save_translation">Save</string>
+
     <string-array name="languages_array">
         <item>English</item>
         <item>Swahili</item>
     </string-array>
 
     <color name="selectedText">#000088</color>
-    
+
     <string name="title_activity_tryout">TryoutActivity</string>
     <string name="title_activity_translation_list">TranslationListActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_edit_translation">EditTranslationActivity</string>
 
 </resources>

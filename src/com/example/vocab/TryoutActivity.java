@@ -31,7 +31,7 @@ public class TryoutActivity extends Activity {
 		translationDataSource = new TranslationDataSource(this);
 		
 		translationDataSource.open();
-		currentTranslation = translationDataSource.getTranslation();
+		currentTranslation = translationDataSource.getUnTryoutTranslation();
 		translationDataSource.close();
 		
 		//Create tryout

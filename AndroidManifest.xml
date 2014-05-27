@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.vocab.AddWordActivity"
+            android:name="com.example.vocab.AddTranslationActivity"
             android:label="@string/title_activity_add_word" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -36,6 +36,10 @@
         <activity
             android:name="com.example.vocab.TranslationListActivity"
             android:label="@string/title_activity_translation_list" >
+        </activity>
+        <activity
+            android:name="com.example.vocab.EditTranslationActivity"
+            android:label="@string/title_activity_edit_translation" >
         </activity>
     </application>
 

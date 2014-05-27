@@ -1,6 +1,8 @@
 package com.example.vocab.model;
 
-import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Translation {
 	
@@ -55,8 +57,12 @@ public class Translation {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Date date) {
-		this.createdAt = date;
+	public void setCreatedAt(String date) {
+		try {
+			this.createdAt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 	
 

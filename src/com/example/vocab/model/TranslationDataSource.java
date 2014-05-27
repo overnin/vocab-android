@@ -51,42 +51,60 @@ public class TranslationDataSource {
 		return true;
 	}
 	
+	public boolean updateTranslation(long id, String sourceLanguage, String sourceContent,
+			String destinationLanguage, String destinationContent) {
+		ContentValues values = new ContentValues();
+		values.put(TranslationColumns.COLUMN_SOURCE_LANGUAGE, sourceLanguage);
+		values.put(TranslationColumns.COLUMN_SOURCE_CONTENT, sourceContent);
+		values.put(TranslationColumns.COLUMN_DESTINATION_LANGUAGE, destinationLanguage);
+		values.put(TranslationColumns.COLUMN_DESTINATION_CONTENT, destinationContent);
+		long newTranslationId = database.update(
+				TABLE_NAME, values, TranslationColumns._ID + "=" + id, null);
+		return true;
+	}
+	
 	public long count() {
 		return DatabaseUtils.longForQuery(database,
 				"SELECT COUNT(*) FROM " + TABLE_NAME, null);	
 	}
 	
-	public Translation getTranslation() {
+	public Translation getTranslation(long id) {
+		String whereClause = null;
+		if (id != 0) {
+			whereClause = TranslationColumns._ID + "="+ id;
+		}
 		Cursor cursor = database.query(TABLE_NAME, 
-				allColumns, null, null, null, null, null);
+				allColumns, whereClause, null, null, null, null);
+		if (cursor == null) {
+			return null;
+		}
 		cursor.moveToFirst();
 		Translation translation = cursorToTranslation(cursor);
 		cursor.close();
 		return translation;
 	}
 	
-	public Cursor getTranslations() {
-		Cursor cursor = database.query(TABLE_NAME, 
-				allColumns, null, null, null, null, null);
-		//int count = cursor.getCount();
-		//List<Translation> translations = new ArrayList<Translation>();
-		
-		cursor.moveToFirst();
-		/*while (!cursor.isAfterLast()) {
-			translations.add(cursorToTranslation(cursor));
-			cursor.moveToNext();
+	public Cursor getTranslations(String inputText) {
+		String whereClause = null;
+		if (inputText != null && inputText.length() != 0) {
+			whereClause = TranslationColumns.COLUMN_DESTINATION_CONTENT + " like '%" + inputText + "%'" 
+					+ " OR " + TranslationColumns.COLUMN_SOURCE_CONTENT + " like '%" + inputText + "%'";
+		} 
+		Cursor cursor = database.query(TABLE_NAME, allColumns, whereClause, null, null, null, null);
+		if (cursor!=null) {
+			cursor.moveToFirst();
 		}
-		cursor.close();
-		return translations;*/
 		return cursor;
 	}
 	
-	private Translation cursorToTranslation(Cursor cursor) {
+	public Translation cursorToTranslation(Cursor cursor) {
 		Translation translation = new Translation();
-		translation.setSourceLanguage(cursor.getString(0));
-		translation.setSourceContent(cursor.getString(1));
-		translation.setDestinationLanguage(cursor.getString(2));
-		translation.setDestinationContent(cursor.getString(3));
+		translation.setId(cursor.getLong(0));
+		translation.setSourceLanguage(cursor.getString(1));
+		translation.setSourceContent(cursor.getString(2));
+		translation.setDestinationLanguage(cursor.getString(3));
+		translation.setDestinationContent(cursor.getString(4));
+		translation.setCreatedAt(cursor.getString(5));
 		return translation;
 	}
 	
@@ -97,7 +115,7 @@ public class TranslationDataSource {
 		private static final String SQL_CREATE_TRANSLATION = 
 				"CREATE TABLE IF NOT EXISTS " +
 			    TABLE_NAME + " (" +
-				TranslationColumns._ID + " INTEGER PRIMARY KEY, " +
+				TranslationColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
 				TranslationColumns.COLUMN_CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
 				TranslationColumns.COLUMN_SOURCE_LANGUAGE + TEXT_TYPE + ", " +
 				TranslationColumns.COLUMN_SOURCE_CONTENT + TEXT_TYPE + ", " +
@@ -121,6 +139,12 @@ public class TranslationDataSource {
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			//TODO
 		}
+	}
+
+
+	public Translation getUnTryoutTranslation() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
