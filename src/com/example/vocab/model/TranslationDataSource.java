@@ -24,6 +24,7 @@ public class TranslationDataSource {
 		TranslationColumns.COLUMN_SOURCE_CONTENT,
 		TranslationColumns.COLUMN_DESTINATION_LANGUAGE,
 		TranslationColumns.COLUMN_DESTINATION_CONTENT,
+		TranslationColumns.COLUMN_UPDATED_AT,
 		TranslationColumns.COLUMN_CREATED_AT
 		};
 	
@@ -90,7 +91,8 @@ public class TranslationDataSource {
 			whereClause = TranslationColumns.COLUMN_DESTINATION_CONTENT + " like '%" + inputText + "%'" 
 					+ " OR " + TranslationColumns.COLUMN_SOURCE_CONTENT + " like '%" + inputText + "%'";
 		} 
-		Cursor cursor = database.query(TABLE_NAME, allColumns, whereClause, null, null, null, null);
+		Cursor cursor = database.query(TABLE_NAME, allColumns, whereClause, null, null, null, 
+				"datetime(" + TranslationColumns.COLUMN_UPDATED_AT+ ") DESC");
 		if (cursor!=null) {
 			cursor.moveToFirst();
 		}
@@ -104,7 +106,8 @@ public class TranslationDataSource {
 		translation.setSourceContent(cursor.getString(2));
 		translation.setDestinationLanguage(cursor.getString(3));
 		translation.setDestinationContent(cursor.getString(4));
-		translation.setCreatedAt(cursor.getString(5));
+		translation.setUpdatedAt(cursor.getString(5));
+		translation.setCreatedAt(cursor.getString(6));
 		return translation;
 	}
 	
@@ -117,11 +120,20 @@ public class TranslationDataSource {
 			    TABLE_NAME + " (" +
 				TranslationColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
 				TranslationColumns.COLUMN_CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
+				TranslationColumns.COLUMN_UPDATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
 				TranslationColumns.COLUMN_SOURCE_LANGUAGE + TEXT_TYPE + ", " +
 				TranslationColumns.COLUMN_SOURCE_CONTENT + TEXT_TYPE + ", " +
 				TranslationColumns.COLUMN_DESTINATION_LANGUAGE + TEXT_TYPE + ", " +
 				TranslationColumns.COLUMN_DESTINATION_CONTENT + TEXT_TYPE +
 				");";
+		private static final String SQL_CREATE_TRIGGER =
+				"CREATE TRIGGER update_at_date_at_update AFTER UPDATE ON " + TABLE_NAME +
+				" BEGIN" +
+						" update " + TABLE_NAME +
+						" SET " + TranslationColumns.COLUMN_UPDATED_AT + "=datetime('now')" +
+						" WHERE " + TranslationColumns._ID + "=NEW." + TranslationColumns._ID + ";" +
+				" END;";
+		
 		
 		public static final int DATABASE_VERSION = 1;
 		public static final String DATABASE_NAME = "vocab.db";
@@ -133,6 +145,7 @@ public class TranslationDataSource {
 		@Override
 		public void onCreate(SQLiteDatabase db) {
 			db.execSQL(SQL_CREATE_TRANSLATION);
+			db.execSQL(SQL_CREATE_TRIGGER);
 		}
 
 		@Override
@@ -147,9 +160,4 @@ public class TranslationDataSource {
 		return null;
 	}
 
-
-	
-
-	
-	
 }

@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -54,13 +56,41 @@ public class EditTranslationFragment extends Fragment {
 		if (translation != null) {
 			int pos = adapter.getPosition(translation.getSourceLanguage());
 			sourceSpinner.setSelection(pos);
+		} else {
+			sourceSpinner.setSelection(1);
 		}
+		sourceSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> adapter, View v, int position, long id) {
+				Spinner dl = (Spinner) getView().findViewById(R.id.destination_language);
+				if (dl != null && position == dl.getSelectedItemPosition()) {
+					int newPos = (position + 1) % 2;
+					dl.setSelection(newPos);
+				}
+			}
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {				
+			}
+		});
 		Spinner destinationSpinner = (Spinner) rootView.findViewById(R.id.destination_language);
 		destinationSpinner.setAdapter(adapter);
 		if (translation !=null) {
 			int pos = adapter.getPosition(translation.getDestinationLanguage());
 			destinationSpinner.setSelection(pos);
-		}
+		} 
+		destinationSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> adapter, View v, int position, long id) {
+				Spinner sl = (Spinner) getView().findViewById(R.id.source_language);
+				if (sl != null && position == sl.getSelectedItemPosition()) {
+					int newPos = (position + 1) % 2;
+					sl.setSelection(newPos);
+				}
+			}
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {				
+			}
+		});
 		
 		Button addButton = (Button) rootView.findViewById(R.id.save_translation);
 		addButton.setOnClickListener(new OnClickListener() {

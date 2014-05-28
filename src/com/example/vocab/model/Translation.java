@@ -12,6 +12,7 @@ public class Translation {
 	private String destinationLanguage;
 	private String destinationContent;
 	private Date createdAt;
+	private Date updatedAt;
 	
 	public long getId() {
 		return id;
@@ -60,6 +61,18 @@ public class Translation {
 	public void setCreatedAt(String date) {
 		try {
 			this.createdAt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(String date) {
+		try {
+			this.updatedAt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
