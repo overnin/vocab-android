@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -40,8 +41,9 @@ public class TranslationListActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_translation_list);
 
-		translationDataSource = new TranslationDataSource(this);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
+		translationDataSource = new TranslationDataSource(this);
 		translationDataSource.open();
 		Cursor cursor = translationDataSource.getTranslations(null);
 		String[] columns = new String[] {
@@ -110,6 +112,9 @@ public class TranslationListActivity extends Activity {
 		case R.id.action_add_word:
     		openAddWord();
     		return true;
+		case android.R.id.home:
+			NavUtils.navigateUpFromSameTask(this);
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}

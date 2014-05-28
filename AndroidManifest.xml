@@ -18,28 +18,36 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity>        
         <activity
-            android:name="com.example.vocab.AddTranslationActivity"
-            android:label="@string/title_activity_add_word" >
+            android:name="com.example.vocab.TryoutActivity"
+            android:label="@string/title_activity_tryout">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.vocab.MainActivity" />
         </activity>
         <activity
-            android:name="com.example.vocab.TryoutActivity"
-            android:label="@string/title_activity_tryout" >
-        </activity>
-        <activity
             android:name="com.example.vocab.TranslationListActivity"
-            android:label="@string/title_activity_translation_list" >
+            android:label="@string/title_activity_translation_list">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.vocab.MainActivity" />
         </activity>
         <activity
             android:name="com.example.vocab.EditTranslationActivity"
-            android:label="@string/title_activity_edit_translation" >
+            android:label="@string/title_activity_edit_translation">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.vocab.TranslationListActivity" />
+        </activity>
+        <activity
+            android:name="com.example.vocab.AddTranslationActivity"
+            android:label="@string/title_activity_add_word">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.vocab.TranslationListActivity" />
         </activity>
     </application>
 
