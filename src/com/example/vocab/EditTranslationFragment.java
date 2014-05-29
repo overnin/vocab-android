@@ -2,6 +2,7 @@ package com.example.vocab;
 
 import com.example.vocab.model.Translation;
 import com.example.vocab.model.TranslationDataSource;
+import com.example.vocab.model.TryoutDataSource;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -19,7 +20,8 @@ import android.widget.Spinner;
 
 public class EditTranslationFragment extends Fragment {
 	TranslationDataSource translationDataSource;
-	long translation_id;
+	TryoutDataSource tryoutDataSource;
+	long translationId;
 	
 	public EditTranslationFragment() {
 	}
@@ -31,14 +33,15 @@ public class EditTranslationFragment extends Fragment {
 				R.layout.fragment_edit_translation, container, false);
 		Bundle b = getArguments();
 		if (b != null) {
-			translation_id = b.getLong("translation_id");
+			translationId = b.getLong("translation_id");
 		}
 		Translation translation = null;
 		translationDataSource = new TranslationDataSource(getActivity());
+		tryoutDataSource = new TryoutDataSource(getActivity());
 		
-		if (translation_id != 0) {
+		if (translationId != 0) {
 			translationDataSource.open();
-			translation = translationDataSource.getTranslation(translation_id);
+			translation = translationDataSource.getTranslation(translationId);
 			translationDataSource.close();
 			EditText et = (EditText) rootView.findViewById(R.id.source_content);
 			et.setText(translation.getSourceContent());
@@ -116,14 +119,18 @@ public class EditTranslationFragment extends Fragment {
 		String destinationContent = destinationContentEditText.getText().toString();
 		//To store
 		translationDataSource.open();
-		if (translation_id == 0) {
-			translationDataSource.createTranslation(sourceLanguage, sourceContent, 
+		if (translationId == 0) {
+			translationId = translationDataSource.createTranslation(sourceLanguage, sourceContent, 
 					destinationLanguage, destinationContent);
 		} else {
-			translationDataSource.updateTranslation(translation_id, sourceLanguage, sourceContent, 
+			translationDataSource.updateTranslation(translationId, sourceLanguage, sourceContent, 
 					destinationLanguage, destinationContent);
 		}
 		translationDataSource.close();
+		tryoutDataSource.open();
+		tryoutDataSource.createTryout(translationId, sourceLanguage);
+		tryoutDataSource.createTryout(translationId, destinationLanguage);
+		tryoutDataSource.close();
 	  	Intent intent = new Intent(getActivity(), TranslationListActivity.class);
     	startActivity(intent);
 	}

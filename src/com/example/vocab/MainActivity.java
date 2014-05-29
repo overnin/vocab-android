@@ -1,6 +1,7 @@
 package com.example.vocab;
 
 import com.example.vocab.model.TranslationDataSource;
+import com.example.vocab.model.TryoutDataSource;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	private TranslationDataSource translationDataSource;
+	private TryoutDataSource tryoutDataSource;
 	
 	
     @Override
@@ -21,17 +23,30 @@ public class MainActivity extends Activity {
         
         //setup the datasource
         translationDataSource = new TranslationDataSource(this);
+        tryoutDataSource = new TryoutDataSource(this);
 
+        //get the translation stats
         translationDataSource.open();
-        long counter = translationDataSource.count();
+        long tanslationCounter = translationDataSource.count();
         translationDataSource.close();
+    
         Resources res = getResources();
         String translationCounterText = String.format(
         		res.getString(R.string.translation_counter),
-        		counter);
-        
+        		tanslationCounter);
+
         TextView counterElt = (TextView) findViewById(R.id.translation_counter);
         counterElt.setText(translationCounterText);
+        
+        //get the tryout stats
+        tryoutDataSource.open();
+        long tryoutCounter = tryoutDataSource.countPending();
+        tryoutDataSource.close();
+        String tryoutStatusText = String.format(
+        		res.getString(R.string.tryout_status),
+        		tryoutCounter);
+        TextView tryoutStatusTextView = (TextView) findViewById(R.id.tryout_status);
+        tryoutStatusTextView.setText(tryoutStatusText);
     }
 
 

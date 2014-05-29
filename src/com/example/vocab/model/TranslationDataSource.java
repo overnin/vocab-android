@@ -15,8 +15,9 @@ import android.provider.BaseColumns;
 public class TranslationDataSource {
 
 	private SQLiteDatabase database;
-	private TranslationDbHelper dbHelper;
+	private DigitalRubenDbHelper dbHelper;
 
+	
 	public static final String TABLE_NAME = "translations";
 	public static final String[] allColumns = {
 		TranslationColumns._ID,
@@ -29,7 +30,7 @@ public class TranslationDataSource {
 		};
 	
 	public TranslationDataSource(Context context) {
-		this.dbHelper = new TranslationDbHelper(context);
+		this.dbHelper = new DigitalRubenDbHelper(context);
 	}
 	
 	public void open() throws SQLException {
@@ -40,7 +41,7 @@ public class TranslationDataSource {
 		this.dbHelper.close();
 	}
 	
-	public boolean createTranslation(String sourceLanguage, String sourceContent,
+	public long createTranslation(String sourceLanguage, String sourceContent,
 									String destinationLanguage, String destinationContent) {	
 		ContentValues values = new ContentValues();
 		values.put(TranslationColumns.COLUMN_SOURCE_LANGUAGE, sourceLanguage);
@@ -49,7 +50,7 @@ public class TranslationDataSource {
 		values.put(TranslationColumns.COLUMN_DESTINATION_CONTENT, destinationContent);
 		long newTranslationId = database.insert(
 				TABLE_NAME, null, values);
-		return true;
+		return newTranslationId;
 	}
 	
 	public boolean updateTranslation(long id, String sourceLanguage, String sourceContent,
@@ -99,6 +100,22 @@ public class TranslationDataSource {
 		return cursor;
 	}
 	
+	public Translation getUnTryoutTranslation() {
+		String whereClause = TranslationColumns._ID + " NOT IN " + 
+				"(SELECT " +TryoutColumns.COLUMN_TRANSLATION_ID + 
+				" FROM "+ TryoutDataSource.TABLE_NAME+")";
+		String sortClause = "datetime(" + TranslationColumns.COLUMN_UPDATED_AT+ ") ASC";
+		Cursor cursor = database.query(TABLE_NAME, allColumns, whereClause, 
+				null, null, null, sortClause);
+		if (cursor==null) {
+			return null;
+		}
+		cursor.moveToFirst();
+		Translation translation = cursorToTranslation(cursor);
+		cursor.close();
+		return translation;
+	}
+	
 	public Translation cursorToTranslation(Cursor cursor) {
 		Translation translation = new Translation();
 		translation.setId(cursor.getLong(0));
@@ -109,55 +126,6 @@ public class TranslationDataSource {
 		translation.setUpdatedAt(cursor.getString(5));
 		translation.setCreatedAt(cursor.getString(6));
 		return translation;
-	}
-	
-	
-	public class TranslationDbHelper extends SQLiteOpenHelper {
-	
-		private static final String TEXT_TYPE = " TEXT";
-		private static final String SQL_CREATE_TRANSLATION = 
-				"CREATE TABLE IF NOT EXISTS " +
-			    TABLE_NAME + " (" +
-				TranslationColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-				TranslationColumns.COLUMN_CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
-				TranslationColumns.COLUMN_UPDATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
-				TranslationColumns.COLUMN_SOURCE_LANGUAGE + TEXT_TYPE + ", " +
-				TranslationColumns.COLUMN_SOURCE_CONTENT + TEXT_TYPE + ", " +
-				TranslationColumns.COLUMN_DESTINATION_LANGUAGE + TEXT_TYPE + ", " +
-				TranslationColumns.COLUMN_DESTINATION_CONTENT + TEXT_TYPE +
-				");";
-		private static final String SQL_CREATE_TRIGGER =
-				"CREATE TRIGGER update_at_date_at_update AFTER UPDATE ON " + TABLE_NAME +
-				" BEGIN" +
-						" update " + TABLE_NAME +
-						" SET " + TranslationColumns.COLUMN_UPDATED_AT + "=datetime('now')" +
-						" WHERE " + TranslationColumns._ID + "=NEW." + TranslationColumns._ID + ";" +
-				" END;";
-		
-		
-		public static final int DATABASE_VERSION = 1;
-		public static final String DATABASE_NAME = "vocab.db";
-		
-		public TranslationDbHelper(Context context) {
-			super(context, DATABASE_NAME, null, DATABASE_VERSION);
-		}
-		
-		@Override
-		public void onCreate(SQLiteDatabase db) {
-			db.execSQL(SQL_CREATE_TRANSLATION);
-			db.execSQL(SQL_CREATE_TRIGGER);
-		}
-
-		@Override
-		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			//TODO
-		}
-	}
-
-
-	public Translation getUnTryoutTranslation() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

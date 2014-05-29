@@ -16,4 +16,9 @@
         android:layout_height="wrap_content"/>
 
     
+     <TextView
+        android:id="@+id/tryout_status"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+    
 </LinearLayout>

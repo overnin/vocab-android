@@ -2,6 +2,7 @@ package com.example.vocab;
 
 import com.example.vocab.model.Translation;
 import com.example.vocab.model.TranslationDataSource;
+import com.example.vocab.model.Tryout;
 import com.example.vocab.model.TryoutDataSource;
 
 import android.app.Activity;
@@ -20,31 +21,40 @@ import android.os.Build;
 
 public class TryoutActivity extends Activity {
 	private TryoutDataSource tryoutDataSource;
-	private TranslationDataSource translationDataSource;
-	private Translation currentTranslation; 
+	//private TranslationDataSource translationDataSource;
+	private Tryout tryout; 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tryout);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		//setup datasources
 		tryoutDataSource = new TryoutDataSource(this);
-		translationDataSource = new TranslationDataSource(this);
+		//translationDataSource = new TranslationDataSource(this);
 		
-		translationDataSource.open();
-		currentTranslation = translationDataSource.getUnTryoutTranslation();
-		translationDataSource.close();
+		//translationDataSource.open();
+		//untryoutTranslation = translationDataSource.getUnTryoutTranslation();
+		//translationDataSource.close();
 		
-		//Create tryout
+		tryoutDataSource.open();
+		long tryoutCounter = tryoutDataSource.countPending();
+		tryoutDataSource.close();
+		
 		Resources res = getResources();
-		String questionText = String.format(
-				res.getString(R.string.tryout_question),
-				currentTranslation.getSourceLanguage(),
-				currentTranslation.getSourceContent());
-		TextView tryoutFromText = (TextView) findViewById(R.id.tryout_question);
-		tryoutFromText.setText(questionText);
+        String tryoutStatusText = String.format(
+        		res.getString(R.string.tryout_status),
+        		tryoutCounter);
+        TextView tryoutStatusTextView = (TextView) findViewById(R.id.tryout_status);
+        tryoutStatusTextView.setText(tryoutStatusText);
+        
+		if (tryoutCounter != 0) {
+			TryoutFragment fragment = new TryoutFragment();
+			getFragmentManager().beginTransaction().add(R.id.container, fragment).commit();			
+		} 
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

@@ -1,21 +1,35 @@
 package com.example.vocab.model;
 
-import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Tryout {
 	
 	private long id;
-	private long translationId;
-	private Date createdDate;
+	private Date createdAt;
 	private String fromLanguage;
+
 	private String answer;
-	private String result;
+	private boolean answered;
+	private Date answeredAt;
+	private boolean answerCorrect;
+
+	private boolean skiped;
+	private Date skipedAt;
 	
-	public Date getCreatedDate() {
-		return createdDate;
+	private long translationId;
+	private Translation translation;
+	
+	public Date getCreatedAt() {
+		return createdAt;
 	}
-	public void setCreatedDate(Date date) {
-		this.createdDate = date;
+	public void setCreatedAt(String date) {
+		try {
+			this.createdAt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	}
 	public long getTranslationId() {
 		return translationId;
@@ -23,12 +37,7 @@ public class Tryout {
 	public void setTranslationId(long translationId) {
 		this.translationId = translationId;
 	}
-	public String getResult() {
-		return result;
-	}
-	public void setResult(String result) {
-		this.result = result;
-	}
+	
 	public long getId() {
 		return id;
 	}
@@ -46,6 +55,50 @@ public class Tryout {
 	}
 	public void setFromLanguage(String fromLanguage) {
 		this.fromLanguage = fromLanguage;
+	}
+	public boolean isSkiped() {
+		return skiped;
+	}
+	public void setSkiped(boolean skiped) {
+		this.skiped = skiped;
+	}
+	public Date getAnsweredAt() {
+		return answeredAt;
+	}
+	public void setAnsweredAt(String answeredAt) {
+		try {
+			this.answeredAt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(answeredAt);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	public boolean isAnswered() {
+		return answered;
+	}
+	public void setAnswered(boolean answered) {
+		this.answered = answered;
+	}
+	public boolean isAnswerCorrect() {
+		return answerCorrect;
+	}
+	public void setAnswerCorrect(boolean answerCorrect) {
+		this.answerCorrect = answerCorrect;
+	}
+	public Date getSkipedAt() {
+		return skipedAt;
+	}
+	public void setSkipedAt(String skipedAt) {
+		try {
+			this.skipedAt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(skipedAt);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+	}
+	public Translation getTranslation() {
+		return translation;
+	}
+	public void setTranslation(Translation translation) {
+		this.translation = translation;
 	}
 	
 

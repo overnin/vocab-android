@@ -23,6 +23,8 @@
     <string name="filter">Type here to filter</string>
     <string name="save_translation">Save</string>
 
+    <string name="tryout_status">You have %1$s pending tryout.</string>
+    
     <string-array name="languages_array">
         <item>English</item>
         <item>Swahili</item>
@@ -30,9 +32,9 @@
 
     <color name="selectedText">#000088</color>
 
-    <string name="title_activity_tryout">TryoutActivity</string>
-    <string name="title_activity_translation_list">TranslationListActivity</string>
+    <string name="title_activity_tryout">Exercise</string>
+    <string name="title_activity_translation_list">Translations</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_edit_translation">EditTranslationActivity</string>
+    <string name="title_activity_edit_translation">Edit Translation</string>
 
 </resources>

@@ -40,7 +40,6 @@ public class TranslationListActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_translation_list);
-
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		translationDataSource = new TranslationDataSource(this);
@@ -131,6 +130,11 @@ public class TranslationListActivity extends Activity {
 		intent.putExtras(b);
 		startActivity(intent);
 	}
+	
+	/*@Override
+	public void onStop() {
+		translationDataSource.close();
+	}*/
 
 
 }
