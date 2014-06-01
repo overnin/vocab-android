@@ -22,7 +22,7 @@ public class DigitalRubenDbHelper extends SQLiteOpenHelper{
 			TranslationColumns.COLUMN_DESTINATION_LANGUAGE + TEXT_TYPE + ", " +
 			TranslationColumns.COLUMN_DESTINATION_CONTENT + TEXT_TYPE +
 			");";
-	private static final String SQL_CREATE_TRIGGER =
+	private static final String SQL_CREATE_TRANSLATION_TRIGGER =
 			"CREATE TRIGGER update_at_date_at_update AFTER UPDATE ON " + TranslationDataSource.TABLE_NAME +
 			" BEGIN" +
 					" update " + TranslationDataSource.TABLE_NAME +
@@ -41,12 +41,16 @@ public class DigitalRubenDbHelper extends SQLiteOpenHelper{
 		    TryoutColumns.COLUMN_ANSWERED + " INTEGER DEFAULT 0, " +
 		    TryoutColumns.COLUMN_ANSWERED_AT + " DATETIME DEFAULT NULL, " +
 		    TryoutColumns.COLUMN_ANSWER_CORRECT + " INTEGER DEFAULT 0, " +
-		    TryoutColumns.COLUMN_SKIPED + " INTEGER DEFAULT 0, " +
-		    TryoutColumns.COLUMN_SKIPED_AT + " DATETIME DEFAULT NULL," +
 		    " FOREIGN KEY (" + TryoutColumns.COLUMN_TRANSLATION_ID + ") REFERENCES " + 
 		    TranslationDataSource.TABLE_NAME + " (" + TranslationColumns._ID + ")" +			    
 		    ");";
-	
+	private static final String SQL_CREATE_TRYOUT_TRIGGER =
+			"CREATE TRIGGER update_at_date_at_answer AFTER UPDATE ON " + TryoutDataSource.TABLE_NAME +
+			" BEGIN" +
+					" update " + TryoutDataSource.TABLE_NAME +
+					" SET " + TryoutColumns.COLUMN_ANSWERED_AT + "=datetime('now')" +
+					" WHERE " + TryoutColumns._ID + "=NEW." + TryoutColumns._ID + ";" +
+			" END;";
 	
 	public DigitalRubenDbHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -55,8 +59,9 @@ public class DigitalRubenDbHelper extends SQLiteOpenHelper{
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(SQL_CREATE_TRANSLATION);
-		db.execSQL(SQL_CREATE_TRIGGER);
+		db.execSQL(SQL_CREATE_TRANSLATION_TRIGGER);
 		db.execSQL(SQL_CREATE_TRYOUT);
+		db.execSQL(SQL_CREATE_TRYOUT_TRIGGER);
 	}
 
 	@Override

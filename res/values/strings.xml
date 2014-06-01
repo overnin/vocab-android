@@ -22,6 +22,8 @@
     <string name="action_translation_list">Translations</string>
     <string name="filter">Type here to filter</string>
     <string name="save_translation">Save</string>
+    <string name="next">Next</string>
+    <string name="finish">Finish</string>
 
     <string name="tryout_status">You have %1$s pending tryout.</string>
     

@@ -1,5 +1,7 @@
 package com.example.vocab.model;
 
+import java.util.Random;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -20,12 +22,10 @@ public class TryoutDataSource {
 		TryoutColumns._ID,
 		TryoutColumns.COLUMN_TRANSLATION_ID,
 		TryoutColumns.COLUMN_FROM_LANGUAGE,
-		TryoutColumns.COLUMN_ANSWER,
 		TryoutColumns.COLUMN_ANSWERED,
 		TryoutColumns.COLUMN_ANSWERED_AT,
+		TryoutColumns.COLUMN_ANSWER,
 		TryoutColumns.COLUMN_ANSWER_CORRECT,
-		TryoutColumns.COLUMN_SKIPED,
-		TryoutColumns.COLUMN_SKIPED_AT,
 	};
 	
 	public TryoutDataSource(Context context) {
@@ -44,14 +44,14 @@ public class TryoutDataSource {
 		ContentValues values = new ContentValues();
 		values.put(TryoutColumns.COLUMN_TRANSLATION_ID, translationId);
 		values.put(TryoutColumns.COLUMN_FROM_LANGUAGE, fromLanguage);
-		long newTryoutId = database.insert(
-				TABLE_NAME, null, values);
+		database.insert(TABLE_NAME, null, values);
 		return true;
 	}
 	
 	public long countPending() {
 		return DatabaseUtils.longForQuery(database,
-				"SELECT COUNT(*) FROM " + TABLE_NAME, null);	
+				"SELECT COUNT(*) FROM " + TABLE_NAME +
+				" WHERE 1!="+TryoutColumns.COLUMN_ANSWERED, null);	
 	}
 	
 	public Tryout getPendingTryout() {
@@ -72,7 +72,10 @@ public class TryoutDataSource {
 		if (cursor == null) {
 			return null;
 		}
-		cursor.moveToFirst();
+		long totalPending = cursor.getCount();
+		Random rand = new Random();
+		int draw = rand.nextInt((int) totalPending) + 1;
+		cursor.move(draw);
 		Tryout tryout = new Tryout();
 		tryout.setId(cursor.getLong(0));
 		tryout.setFromLanguage(cursor.getString(1));
@@ -84,6 +87,14 @@ public class TryoutDataSource {
 		translation.setDestinationLanguage(cursor.getString(6));
 		tryout.setTranslation(translation);
 		return tryout;
+	}
+	
+	public void updateTryoutResult(long id, String answer, long answeredCorrect) {
+		ContentValues values = new ContentValues();		
+		values.put(TryoutColumns.COLUMN_ANSWERED, 1);
+		values.put(TryoutColumns.COLUMN_ANSWER, answer);
+		values.put(TryoutColumns.COLUMN_ANSWER_CORRECT , answeredCorrect);
+		database.update(TABLE_NAME, values, id+"="+TryoutColumns._ID, null);
 	}
 	
 	public Tryout cursorToTryout(Cursor cursor) 

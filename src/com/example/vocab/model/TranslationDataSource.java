@@ -60,7 +60,7 @@ public class TranslationDataSource {
 		values.put(TranslationColumns.COLUMN_SOURCE_CONTENT, sourceContent);
 		values.put(TranslationColumns.COLUMN_DESTINATION_LANGUAGE, destinationLanguage);
 		values.put(TranslationColumns.COLUMN_DESTINATION_CONTENT, destinationContent);
-		long newTranslationId = database.update(
+		database.update(
 				TABLE_NAME, values, TranslationColumns._ID + "=" + id, null);
 		return true;
 	}
