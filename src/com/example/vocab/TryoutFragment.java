@@ -49,7 +49,7 @@ public class TryoutFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				EditText et = (EditText) getView().findViewById(R.id.tryout_answer);
-				String submittedAnswer = et.getText().toString();
+				String submittedAnswer = et.getText().toString().trim();
 
 				TextView tv = (TextView) getView().findViewById(R.id.tryout_status);
 				long success;

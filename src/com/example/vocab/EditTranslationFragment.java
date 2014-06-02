@@ -111,12 +111,12 @@ public class EditTranslationFragment extends Fragment {
 		Spinner sourceLanguageSpinner = (Spinner) getView().findViewById(R.id.source_language);
 		String sourceLanguage = sourceLanguageSpinner.getSelectedItem().toString();
 		EditText sourceContentEditText = (EditText) getView().findViewById(R.id.source_content);
-		String sourceContent = sourceContentEditText.getText().toString();
+		String sourceContent = sourceContentEditText.getText().toString().trim();
 		//get destination
 		Spinner destinationLanguageSpinner = (Spinner) getView().findViewById(R.id.destination_language);
 		String destinationLanguage = destinationLanguageSpinner.getSelectedItem().toString();
 		EditText destinationContentEditText = (EditText) getView().findViewById(R.id.destination_content);
-		String destinationContent = destinationContentEditText.getText().toString();
+		String destinationContent = destinationContentEditText.getText().toString().trim();
 		//To store
 		translationDataSource.open();
 		if (translationId == 0) {
