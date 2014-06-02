@@ -33,16 +33,8 @@ public class TryoutFragment extends Fragment {
 		tryoutDataSource.open();
 		tryout = tryoutDataSource.getPendingTryout();
 		tryoutDataSource.close();
-		String translateLanguage;
-		String contentToAsk;
-		Translation translation = tryout.getTranslation(); 
-		if (tryout.getFromLanguage().equalsIgnoreCase(translation.getSourceLanguage())) {
-			contentToAsk = translation.getSourceContent();
-			translateLanguage = translation.getDestinationLanguage();
-		} else {
-			contentToAsk = translation.getDestinationContent();
-			translateLanguage = translation.getSourceLanguage();
-		}
+		String translateLanguage = tryout.getTryoutLanguage();
+		String contentToAsk = tryout.getTryoutContent();
 		
 		Resources res = getResources();
 		String questionText = String.format(
@@ -57,18 +49,12 @@ public class TryoutFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				EditText et = (EditText) getView().findViewById(R.id.tryout_answer);
-				String submitedAnswer = et.getText().toString();
-				String correctAnswer = null;
-				Translation translation = tryout.getTranslation();
-				if (tryout.getFromLanguage() == translation.getSourceLanguage()) {
-					correctAnswer = translation.getDestinationContent();
-				} else {
-					correctAnswer = translation.getSourceContent();
-				}
+				String submittedAnswer = et.getText().toString();
+
 				TextView tv = (TextView) getView().findViewById(R.id.tryout_status);
 				long success;
 				tryoutDataSource.open();
-				if (submitedAnswer.equalsIgnoreCase(correctAnswer)) {
+				if (tryout.isSubmitCorrect(submittedAnswer)) {
 					//success
 					tv.setText("Correct! :)");
 					success = 1;
@@ -76,11 +62,11 @@ public class TryoutFragment extends Fragment {
 					//fail  => display correct one
 					tv.setText("Failed :(");
 					TextView correctAnswerText = (TextView) getView().findViewById(R.id.correct_answer);
-					correctAnswerText.setText(correctAnswer);
+					correctAnswerText.setText(tryout.getCorrectAnswer());
 					success = 0;
 					tryoutDataSource.createTryout(tryout.getTranslationId(), tryout.getFromLanguage());
 				}
-				tryoutDataSource.updateTryoutResult(tryout.getId(), submitedAnswer, success);
+				tryoutDataSource.updateTryoutResult(tryout.getId(), submittedAnswer, success);
 				
 				long pendingTryout = tryoutDataSource.countPending();
 				tryoutDataSource.close();

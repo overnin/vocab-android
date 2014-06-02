@@ -101,5 +101,35 @@ public class Tryout {
 		this.translation = translation;
 	}
 	
-
+	public boolean isSubmitCorrect(String submit){
+		String correctAnswer = getCorrectAnswer();
+		if (submit.equalsIgnoreCase(correctAnswer)) {
+			return true;
+		}
+		return false;
+	}
+	
+	public String getCorrectAnswer() {
+		Translation translation = getTranslation();
+		if (fromLanguage.equalsIgnoreCase(translation.getSourceLanguage())) {
+			return translation.getDestinationContent();
+		}
+		return translation.getSourceContent();
+	}
+	
+	public String getTryoutContent() { 
+		if (getFromLanguage().equalsIgnoreCase(translation.getSourceLanguage())) {
+			return translation.getSourceContent();
+		} 
+		return translation.getDestinationContent();
+	}
+	
+	public String getTryoutLanguage() {
+		if (getFromLanguage().equalsIgnoreCase(translation.getSourceLanguage())) {
+			return translation.getDestinationLanguage();
+		} 	
+		return translation.getSourceLanguage();
+	}
+	
+	
 }
