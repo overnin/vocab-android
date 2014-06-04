@@ -39,6 +39,5 @@
         android:layout_alignLeft="@+id/source_content" 
          android:textAppearance="?android:attr/textAppearanceMedium"/>
  
-    
-
+   
 </RelativeLayout>

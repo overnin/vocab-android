@@ -35,6 +35,7 @@ import android.os.Build;
 public class TranslationListActivity extends Activity {
 	private TranslationDataSource translationDataSource;
 	private SimpleCursorAdapter dataAdapter;
+	private Cursor cursor;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class TranslationListActivity extends Activity {
 		
 		translationDataSource = new TranslationDataSource(this);
 		translationDataSource.open();
-		Cursor cursor = translationDataSource.getTranslations(null);
+		cursor = translationDataSource.getTranslations(null);
 		String[] columns = new String[] {
 				TranslationColumns.COLUMN_SOURCE_LANGUAGE,
 				TranslationColumns.COLUMN_SOURCE_CONTENT,
@@ -121,6 +122,7 @@ public class TranslationListActivity extends Activity {
 	public void openAddWord() {
     	Intent intent = new Intent(this, AddTranslationActivity.class);
     	startActivity(intent);
+    	finish();
     }
 	
 	public void openEditTranslation(Translation t) {
@@ -129,12 +131,13 @@ public class TranslationListActivity extends Activity {
 		b.putLong("translation_id", t.getId());
 		intent.putExtras(b);
 		startActivity(intent);
+		finish();
 	}
 	
-	/*@Override
-	public void onStop() {
+	@Override
+	protected void onDestroy() {
+		cursor.close();
 		translationDataSource.close();
-	}*/
-
-
+		super.onDestroy();
+	}
 }

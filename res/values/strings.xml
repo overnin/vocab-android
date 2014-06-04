@@ -24,7 +24,9 @@
     <string name="save_translation">Save</string>
     <string name="next">Next</string>
     <string name="finish">Finish</string>
-
+    <string name="no_similar_translation">No similar translation</string>
+	<string name="similar_translation_present">Already existing translation:</string>
+    
     <string name="tryout_status">You have %1$s pending tryout.</string>
     
     <string-array name="languages_array">

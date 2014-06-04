@@ -68,4 +68,19 @@
         android:layout_below="@+id/destination_box"
         android:text="@string/save_translation" />
     
+    <TextView 
+        android:id="@+id/similar_status"
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/save_translation"
+        android:text="@string/no_similar_translation"
+        />
+    
+    <ListView
+        android:id="@+id/similar_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_below="@+id/similar_status"
+        />
+    
 </RelativeLayout>

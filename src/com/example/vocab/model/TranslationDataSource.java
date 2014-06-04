@@ -70,6 +70,20 @@ public class TranslationDataSource {
 				"SELECT COUNT(*) FROM " + TABLE_NAME, null);	
 	}
 	
+	public Cursor findSimilar(long translationId, String sourceContent) {
+		String whereClause = "UPPER('"+sourceContent+"') LIKE UPPER("+TranslationColumns.COLUMN_SOURCE_CONTENT+")";
+		if (translationId != 0) {
+			whereClause += " AND "+TranslationColumns._ID+"!="+translationId;
+		}
+		Cursor cursor = database.query(TABLE_NAME,
+				allColumns, whereClause , null, null, null, null);
+		if (cursor == null) {
+			return null;
+		}
+		cursor.moveToFirst();
+		return cursor;
+	}
+	
 	public Translation getTranslation(long id) {
 		String whereClause = null;
 		if (id != 0) {
@@ -77,7 +91,7 @@ public class TranslationDataSource {
 		}
 		Cursor cursor = database.query(TABLE_NAME, 
 				allColumns, whereClause, null, null, null, null);
-		if (cursor == null) {
+		if (cursor == null || cursor.getCount() == 0) {
 			return null;
 		}
 		cursor.moveToFirst();

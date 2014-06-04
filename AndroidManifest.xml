@@ -15,7 +15,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.example.vocab.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -23,28 +24,32 @@
         </activity>        
         <activity
             android:name="com.example.vocab.TryoutActivity"
-            android:label="@string/title_activity_tryout">
+            android:label="@string/title_activity_tryout"
+            android:noHistory="true">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.vocab.MainActivity" />
         </activity>
         <activity
             android:name="com.example.vocab.TranslationListActivity"
-            android:label="@string/title_activity_translation_list">
+            android:label="@string/title_activity_translation_list"
+            android:noHistory="true">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.vocab.MainActivity" />
         </activity>
         <activity
             android:name="com.example.vocab.EditTranslationActivity"
-            android:label="@string/title_activity_edit_translation">
+            android:label="@string/title_activity_edit_translation"
+            android:noHistory="true">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.vocab.TranslationListActivity" />
         </activity>
         <activity
             android:name="com.example.vocab.AddTranslationActivity"
-            android:label="@string/title_activity_add_word">
+            android:label="@string/title_activity_add_word"
+            android:noHistory="true">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.vocab.TranslationListActivity" />
