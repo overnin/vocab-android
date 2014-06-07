@@ -60,19 +60,11 @@
 
     </LinearLayout>
     
-    <Button
-        android:id="@+id/save_translation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/destination_box"
-        android:layout_below="@+id/destination_box"
-        android:text="@string/save_translation" />
-    
     <TextView 
         android:id="@+id/similar_status"
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
-        android:layout_below="@+id/save_translation"
+        android:layout_below="@+id/destination_box"
         android:text="@string/no_similar_translation"
         />
     

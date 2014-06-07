@@ -15,6 +15,9 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
@@ -38,6 +41,7 @@ public class EditTranslationFragment extends Fragment {
 	Handler actHandler;
 	
 	public EditTranslationFragment() {
+		setHasOptionsMenu(true);
 	}
 
 	@Override
@@ -48,7 +52,7 @@ public class EditTranslationFragment extends Fragment {
 		
 		Translation translation = null;
 		translationDataSource = new TranslationDataSource(getActivity());
-		//tryoutDataSource = new TryoutDataSource(getActivity());
+		tryoutDataSource = new TryoutDataSource(getActivity());
 		translationDataSource.open();
 		Bundle b = getArguments();
 		if (b != null) {
@@ -170,15 +174,7 @@ public class EditTranslationFragment extends Fragment {
 			public void onNothingSelected(AdapterView<?> arg0) {				
 			}
 		});
-		
-		Button addButton = (Button) rootView.findViewById(R.id.save_translation);
-		addButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				saveTranslation();
-			}
-		});
-		
+			
 		return rootView;
 	}
 	
@@ -234,10 +230,27 @@ public class EditTranslationFragment extends Fragment {
 		tryoutDataSource.createTryout(translationId, sourceLanguage);
 		tryoutDataSource.createTryout(translationId, destinationLanguage);
 		tryoutDataSource.close();
-	  	Intent intent = new Intent(getActivity(), TranslationListActivity.class);
-    	startActivity(intent);
+	  
 	}
 
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+		inflater.inflate(R.menu.edit_translation, menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) {
+		case R.id.save:
+			saveTranslation();
+			Intent intent = new Intent(getActivity(), TranslationListActivity.class);
+	    	startActivity(intent);
+	    	getActivity().finish();
+	    	break;
+		}
+		return true;
+	}
+	
 	@Override
 	public void onDestroy() {
 		translationDataSource.close();

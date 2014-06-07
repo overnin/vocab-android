@@ -21,8 +21,6 @@ import android.os.Build;
 
 public class TryoutActivity extends Activity {
 	private TryoutDataSource tryoutDataSource;
-	//private TranslationDataSource translationDataSource;
-	private Tryout tryout; 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,28 +30,20 @@ public class TryoutActivity extends Activity {
 		
 		//setup datasources
 		tryoutDataSource = new TryoutDataSource(this);
-		//translationDataSource = new TranslationDataSource(this);
-		
-		//translationDataSource.open();
-		//untryoutTranslation = translationDataSource.getUnTryoutTranslation();
-		//translationDataSource.close();
 		
 		tryoutDataSource.open();
 		long tryoutCounter = tryoutDataSource.countPending();
 		tryoutDataSource.close();
-		
-		Resources res = getResources();
-        String tryoutStatusText = String.format(
-        		res.getString(R.string.tryout_status),
-        		tryoutCounter);
-        TextView tryoutStatusTextView = (TextView) findViewById(R.id.tryout_status);
-        tryoutStatusTextView.setText(tryoutStatusText);
-        
-		if (tryoutCounter != 0) {
-			TryoutFragment fragment = new TryoutFragment();
-			getFragmentManager().beginTransaction().add(R.id.container, fragment).commit();			
-		} 
+		        
+		if (tryoutCounter > 0) {
+			DoTryoutFragment fragment = new DoTryoutFragment();
+			getFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
+		} else {
+			AddTryoutFragment fragment = new AddTryoutFragment();
+			getFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
+		}
 	}
+	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -84,6 +74,11 @@ public class TryoutActivity extends Activity {
 	protected void onPause() {
 		//wordDictionary.close();
 		super.onPause();
+	}
+	
+	public void onDestroy(){
+		tryoutDataSource.close();
+		super.onDestroy();
 	}
 	
 }

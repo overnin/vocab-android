@@ -1,11 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.vocab.EditTranslationActivity" >
+    tools:context="com.example.vocab.TryoutActivity" >
 
-    <item
-        android:id="@+id/save"
+    <item  
+        android:id="@+id/verifying"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:title="@string/save"/>
-
+        android:title="@string/verify"/>
+    
 </menu>

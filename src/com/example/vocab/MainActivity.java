@@ -80,16 +80,19 @@ public class MainActivity extends Activity {
     private void openTranslationList() {
     	Intent intent = new Intent(this, TranslationListActivity.class);
     	startActivity(intent);
+    	finish();
 	}
 
 	public void openAddWord() {
     	Intent intent = new Intent(this, AddTranslationActivity.class);
     	startActivity(intent);
+    	finish();
     }
     
     public void openTryout() {
     	Intent intent = new Intent(this, TryoutActivity.class);
     	startActivity(intent);
+    	finish();
     }
     
     public void openSettings() {

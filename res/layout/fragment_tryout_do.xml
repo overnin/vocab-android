@@ -4,6 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
+     <TextView 
+        android:id="@+id/tryout_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
     
      <TextView
         android:id="@+id/tryout_question"
@@ -18,27 +23,10 @@
         android:ems="10" >
         <requestFocus />
     </EditText>
-
-    <Button
-        android:id="@+id/verifying"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/verifying" />
     
-    <Button
-        android:id="@+id/next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/next"
-        android:visibility="invisible" />
     
     <TextView
-        android:id="@+id/tryout_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    
-    <TextView
-        android:id="@+id/correct_answer"
+        android:id="@+id/tryout_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     

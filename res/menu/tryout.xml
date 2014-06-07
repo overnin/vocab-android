@@ -2,6 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.vocab.TryoutActivity" >
 
+     <item  
+        android:id="@+id/create_tryout"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/create_tryout"/>
+    
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

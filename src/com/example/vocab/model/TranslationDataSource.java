@@ -84,6 +84,23 @@ public class TranslationDataSource {
 		return cursor;
 	}
 	
+	private String sqlCmpStr(String column, String content) {
+		return "UPPER("+column+") LIKE UPPER('"+content+"')";
+	}
+	
+	public boolean existsSimilar(String question, String answer){
+		String whereClause = 
+				" WHERE "+ sqlCmpStr(TranslationColumns.COLUMN_SOURCE_CONTENT, question) +
+				" AND " + sqlCmpStr(TranslationColumns.COLUMN_DESTINATION_CONTENT, answer) +
+				" OR " + sqlCmpStr(TranslationColumns.COLUMN_DESTINATION_CONTENT, question) +
+				" AND " + sqlCmpStr(TranslationColumns.COLUMN_SOURCE_CONTENT, answer);
+		long count = DatabaseUtils.longForQuery(database, 
+				"SELECT COUNT(*) "+
+			    " FROM " + TABLE_NAME +
+			    whereClause, null);
+		return count > 0;
+	}
+	
 	public Translation getTranslation(long id) {
 		String whereClause = null;
 		if (id != 0) {
