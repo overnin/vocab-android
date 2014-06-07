@@ -1,43 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="6dip" >
+    android:padding="6dip" 
+    >
     
-     <TextView
-        android:id="@+id/source_language"
-        android:layout_width="wrap_content"
+    <LinearLayout 
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
- 
-    <TextView
-        android:id="@+id/destination_language"
-        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="2dp"
+        >
+	    <TextView
+	        android:id="@+id/source_language"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+	
+	    <TextView
+        	android:id="@+id/source_content"
+        	android:layout_width="0dp"
+        	android:layout_height="wrap_content"
+        	android:layout_weight="4"
+        	android:textAppearance="?android:attr/textAppearanceMedium"/>
+	    
+    </LinearLayout>
+
+    <LinearLayout 
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/source_language"
-        android:layout_below="@+id/source_language"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-  
-    <TextView
-        android:id="@+id/source_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/source_language"
-        android:layout_alignBottom="@+id/source_language"
-        android:layout_toRightOf="@+id/source_language"
-         android:textAppearance="?android:attr/textAppearanceMedium"/>
- 
-    <TextView
-        android:id="@+id/destination_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/source_content"
-        android:layout_alignBottom="@+id/destination_language"
-        android:layout_alignLeft="@+id/source_content" 
-         android:textAppearance="?android:attr/textAppearanceMedium"/>
- 
+        android:orientation="horizontal">
+    
+        <TextView
+	        android:id="@+id/destination_language"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+       
+	    <TextView
+	        android:id="@+id/destination_content"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="4"
+	        android:textAppearance="?android:attr/textAppearanceMedium"/>
+	 
+    </LinearLayout>
    
-</RelativeLayout>
+</LinearLayout>

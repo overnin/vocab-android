@@ -1,9 +1,8 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="6dip"
     tools:context="com.example.vocab.EditTranslationActivity$PlaceholderFragment" >
 
     <LinearLayout
@@ -36,8 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_alignLeft="@+id/source_box"
-        android:layout_below="@+id/source_box"
+        android:paddingBottom="6dp"
         >
 
          <Spinner
@@ -64,7 +62,8 @@
         android:id="@+id/similar_status"
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
-        android:layout_below="@+id/destination_box"
+        android:paddingLeft="3dp"
+        android:paddingTop="6dp"
         android:text="@string/no_similar_translation"
         />
     
@@ -72,7 +71,6 @@
         android:id="@+id/similar_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" 
-        android:layout_below="@+id/similar_status"
         />
     
-</RelativeLayout>
+</LinearLayout>
