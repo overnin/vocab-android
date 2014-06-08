@@ -37,6 +37,7 @@ public class EditTranslationFragment extends Fragment {
 	TranslationDataSource translationDataSource;
 	TryoutDataSource tryoutDataSource;
 	long translationId = 0;
+	Translation translation = null;
 	private SimpleCursorAdapter dataAdapter;
 	Handler actHandler;
 	
@@ -50,7 +51,6 @@ public class EditTranslationFragment extends Fragment {
 		View rootView = inflater.inflate(
 				R.layout.fragment_edit_translation, container, false);
 		
-		Translation translation = null;
 		translationDataSource = new TranslationDataSource(getActivity());
 		tryoutDataSource = new TryoutDataSource(getActivity());
 		translationDataSource.open();
@@ -237,8 +237,12 @@ public class EditTranslationFragment extends Fragment {
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
-		inflater.inflate(R.menu.edit_translation, menu);
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		if (translation != null) {
+			inflater.inflate(R.menu.translation_edit, menu);
+		} else {
+			inflater.inflate(R.menu.translation_add, menu);
+		}
 	}
 	
 	@Override
