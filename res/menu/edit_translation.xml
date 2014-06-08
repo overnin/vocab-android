@@ -8,4 +8,10 @@
         android:showAsAction="always"
         android:title="@string/save"/>
 
+     <item
+        android:id="@+id/delete"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="@string/delete"/>
+    
 </menu>

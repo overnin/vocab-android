@@ -33,7 +33,7 @@ public class TryoutDataSource {
 	}
 	
 	public void open() throws SQLException {
-		database = dbHelper.getWritableDatabase();
+		database = dbHelper.open();
 	}
 	
 	public void close() {

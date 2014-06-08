@@ -217,7 +217,7 @@ public class EditTranslationFragment extends Fragment {
 		EditText destinationContentEditText = (EditText) getView().findViewById(R.id.destination_content);
 		String destinationContent = destinationContentEditText.getText().toString().trim();
 		//To store
-		translationDataSource.open();
+		//translationDataSource.open();
 		if (translationId == 0) {
 			translationId = translationDataSource.createTranslation(sourceLanguage, sourceContent, 
 					destinationLanguage, destinationContent);
@@ -225,12 +225,15 @@ public class EditTranslationFragment extends Fragment {
 			translationDataSource.updateTranslation(translationId, sourceLanguage, sourceContent, 
 					destinationLanguage, destinationContent);
 		}
-		translationDataSource.close();
+		//translationDataSource.close();
 		tryoutDataSource.open();
 		tryoutDataSource.createTryout(translationId, sourceLanguage);
 		tryoutDataSource.createTryout(translationId, destinationLanguage);
 		tryoutDataSource.close();
-	  
+	}
+	
+	public void deleteTranslation() {
+		translationDataSource.delete(translationId);
 	}
 
 	@Override
@@ -243,17 +246,26 @@ public class EditTranslationFragment extends Fragment {
 		switch(item.getItemId()) {
 		case R.id.save:
 			saveTranslation();
-			Intent intent = new Intent(getActivity(), TranslationListActivity.class);
-	    	startActivity(intent);
-	    	getActivity().finish();
-	    	break;
+			openTranlsationListActivity();
+			break;
+		case R.id.delete:
+			deleteTranslation();
+			openTranlsationListActivity();
+			break;
 		}
 		return true;
+	}
+	
+	public void openTranlsationListActivity() {
+		Intent intent = new Intent(getActivity(), TranslationListActivity.class);
+    	startActivity(intent);
+    	getActivity().finish();
 	}
 	
 	@Override
 	public void onDestroy() {
 		translationDataSource.close();
+		tryoutDataSource.close();
 		super.onDestroy();
 	}
 }

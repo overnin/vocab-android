@@ -34,7 +34,7 @@ public class TranslationDataSource {
 	}
 	
 	public void open() throws SQLException {
-		this.database = this.dbHelper.getWritableDatabase();
+		this.database = this.dbHelper.open();
 	}
 	
 	public void close() {
@@ -157,6 +157,11 @@ public class TranslationDataSource {
 		translation.setUpdatedAt(cursor.getString(5));
 		translation.setCreatedAt(cursor.getString(6));
 		return translation;
+	}
+
+	public void delete(long translationId) {
+		database.delete(TABLE_NAME,
+				TranslationColumns._ID+"="+translationId, null);
 	}
 
 }

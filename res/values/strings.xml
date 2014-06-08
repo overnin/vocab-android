@@ -39,6 +39,7 @@
 	<string name="create_tryout">Create Tryout</string>
 	<string name="create_tryout_status">You are about to create %1$s exercises.</string>
 	<string name="create">Create</string>
+	<string name="delete">Delete</string>
 	
 	<string name="english">English</string>
 	<string name="swahili">Swahili</string>

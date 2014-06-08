@@ -42,7 +42,7 @@ public class DigitalRubenDbHelper extends SQLiteOpenHelper{
 		    TryoutColumns.COLUMN_ANSWERED_AT + " DATETIME DEFAULT NULL, " +
 		    TryoutColumns.COLUMN_ANSWER_CORRECT + " INTEGER DEFAULT 0, " +
 		    " FOREIGN KEY (" + TryoutColumns.COLUMN_TRANSLATION_ID + ") REFERENCES " + 
-		    TranslationDataSource.TABLE_NAME + " (" + TranslationColumns._ID + ")" +			    
+		    TranslationDataSource.TABLE_NAME + " (" + TranslationColumns._ID + ") ON DELETE CASCADE" +  
 		    ");";
 	private static final String SQL_CREATE_TRYOUT_TRIGGER =
 			"CREATE TRIGGER update_at_date_at_answer AFTER UPDATE ON " + TryoutDataSource.TABLE_NAME +
@@ -51,9 +51,14 @@ public class DigitalRubenDbHelper extends SQLiteOpenHelper{
 					" SET " + TryoutColumns.COLUMN_ANSWERED_AT + "=datetime('now')" +
 					" WHERE " + TryoutColumns._ID + "=NEW." + TryoutColumns._ID + ";" +
 			" END;";
-	
 	public DigitalRubenDbHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+	}
+	
+	public SQLiteDatabase open() {
+		SQLiteDatabase database = this.getWritableDatabase();
+		database.execSQL("PRAGMA foreign_keys=ON;");
+		return database;
 	}
 	
 	@Override
