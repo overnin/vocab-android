@@ -40,6 +40,11 @@
 	<string name="create_tryout_status">You are about to create %1$s exercises.</string>
 	<string name="create">Create</string>
 	<string name="delete">Delete</string>
+	<string name="today">Today</string>
+	<string name="success_stats">Success: %1$s</string>
+	<string name="failure_stats">Failure %1$s</string>
+	<string name="last_practice">Last day practiced: %1$s</string>
+	<string name="general_stats">You have %1$s translation(s) and %2$s pending exercie(s).</string>
 	
 	<string name="english">English</string>
 	<string name="swahili">Swahili</string>

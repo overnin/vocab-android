@@ -9,16 +9,77 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    
     <TextView
-        android:id="@+id/translation_counter"
+		android:id="@+id/today"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
-
+        android:layout_height="wrap_content"
+        android:text="@string/today"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        />
     
      <TextView
-        android:id="@+id/tryout_status"
+		android:id="@+id/today_success_stats"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="@string/success_stats"
+        />
+     
+     <TextView
+		android:id="@+id/today_failure_stats"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/failure_stats"
+        />
+    
+    <TextView 
+		android:id="@+id/last_practice"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        />
+    
+     <TextView
+		android:id="@+id/last_practice_success_stats"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/success_stats"
+        />
+     
+     <TextView
+		android:id="@+id/last_practice_failure_stats"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/failure_stats"
+        />
+     
+     <TextView 
+		android:id="@+id/last_last_practice"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        />
+    
+     <TextView
+		android:id="@+id/last_last_practice_success_stats"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/success_stats"
+        />
+     
+     <TextView
+		android:id="@+id/last_last_practice_failure_stats"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/failure_stats"
+        />
+    
+    <TextView
+        android:id="@+id/general_stats"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="40dp"
+        />
     
 </LinearLayout>

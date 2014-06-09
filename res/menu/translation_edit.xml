@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.vocab.EditTranslationActivity" >
+
+    <item
+        android:id="@+id/save"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="@string/save"/>
+
+     <item
+        android:id="@+id/delete"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="@string/delete"/>
+    
+</menu>

@@ -9,6 +9,8 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,6 +89,11 @@ public class AddTryoutFragment extends Fragment {
 				total);
 		TextView createTryoutStatusText = (TextView) rootView.findViewById(R.id.create_tryout_status);
 		createTryoutStatusText.setText(createTryoutStatus);
+	}
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.tryout_add, menu);
 	}
 	
 	public boolean onOptionsItemSelected(MenuItem item) {
